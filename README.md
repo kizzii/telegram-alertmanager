@@ -1,23 +1,22 @@
 # Telegram-Alertmanager
 
-This is an API for allow Alert Manager from Prometheus send messages to Telegram
+This is an API for allowing Alert Manager from Prometheus send messages to Telegram
 
 Require:
   - [prom/alertmanager:v0.20.0](https://hub.docker.com/r/prom/alertmanager)
   - [Telgram Bot](https://core.telegram.org/bots)
  
- # How to use this image
+# How to use this image
 
-## via docker run
-
+**via docker run**
 ```bash
-docker run -d --name my-telegram-alertmanager -p 8000:80 \
+docker run -d -name my-telegram-alertmanager -p 8000:80 \
 -e DEFAULT_BOT_TOKEN=<telegram_bot_token> \
 -e DEFAULT_CHAT_ID=<chat_id> \
 kizzii/telegram-alertmanager:latest
 ```
 
-## via docker-compose
+**via docker-compose**
  
  ```yaml
 version: "3.5"
@@ -62,19 +61,3 @@ Then mount this file to container
 You need to Create Telegram Bot then you can get Bot Token and Chat ID 
 [https://core.telegram.org/bots](https://core.telegram.org/bots)
 
-# Alertmanger config file
-**alertmanager.yml**
-```yaml
-...
-recivers:
-- name: example_group
-  webhook_configs:
-  - url: "http://localhost:8000/example #example is from configfile
-- name: example2_group
-  webhook_configs:
-  - url: "http://localhost:8000/example2 #example2 is from configfile
-...
-```
-
-#### Note
-if you use `DEFAULT_BOT_TOKEN` and `DEFAULT_CHAT_ID` default url is `http://<hostname>:<port>/default`
