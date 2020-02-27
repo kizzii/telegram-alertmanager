@@ -4,6 +4,7 @@ import telegram
 import yaml
 import os
 import json
+import sys
 
 
 app = Flask(__name__)
@@ -30,10 +31,15 @@ def get_configuration():
     return config
 
 def parse_data(data):
-    messege = ""
-    messege += 'Status: ' + data['status'] + '\n'
-    messege += 'Name: ' + data['commonLabels']['alertname'] + ' ['+ data['commonLabels']['severity'] + ']' + '\n'
-    messege += 'Description: ' + data['commonAnnotations']['description']
+    try:
+        messege = ""
+        messege += 'Status: ' + data['status'] + '\n'
+        messege += 'Name: ' + data['commonLabels']['alertname'] + ' ['+ data['commonLabels']['severity'] + ']' + '\n'
+        messege += 'Description: ' + data['commonAnnotations']['description']
+    except KeyError as err:
+        app.logger.error(f"Data : {data}")
+        raise err
+
     return messege
 
 def send_message(bot_token, chat_id, message):
