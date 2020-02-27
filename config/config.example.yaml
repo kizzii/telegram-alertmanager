@@ -1,4 +1,5 @@
 # Web hook url http://<host>:<port>/<name>
+# changes file name to config.yaml to enable this configuration
 <name>:
   bot_token: <bot_token>
   chat_id: <chat_id> 

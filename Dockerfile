@@ -10,6 +10,9 @@ COPY requirements.txt /var/www/html
 RUN pip3 install -r requirements.txt
 
 COPY api/ /var/www/html/
+
+COPY config/ config/
+
 COPY entrypoint.sh /usr/bin/
 
 RUN chmod +x /usr/bin/entrypoint.sh

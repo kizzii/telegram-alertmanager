@@ -8,8 +8,10 @@ import os
 
 app = Flask(__name__)
 
+config_path = "config/config.yaml"
+
 def get_configuration_from_file():
-    with open(r'config.yaml') as file:
+    with open(config_path) as file:
         data = yaml.load(file, Loader=yaml.FullLoader)
     return data
 
