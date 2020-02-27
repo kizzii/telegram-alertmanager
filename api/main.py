@@ -4,6 +4,7 @@ from datetime import datetime
 import telegram
 import yaml
 import os
+import json
 
 
 app = Flask(__name__)
@@ -30,7 +31,7 @@ def get_configuration():
     return config
 
 def parse_data(data):
-    result = ""
+    result = []
     for alert in data['alerts']:
         messege = ""
         messege += 'Status: ' + alert['status'] + '\n'
@@ -41,7 +42,7 @@ def parse_data(data):
         if alert['status'] == 'resolved':
             ends_at = datetime.strptime(alert['endsAt'][:-4], "%Y-%m-%dT%H:%M:%S.%f")
             messege += 'Ends at: ' + ends_at.strftime('%d-%m-%Y %H:%M') + '\n'
-        result += messege
+        result.append(messege)
     return result
 
 def send_message(bot_token, chat_id, message):
@@ -51,9 +52,10 @@ def send_message(bot_token, chat_id, message):
 @app.route('/<path:text>', methods=['GET', 'POST'])
 def root(text):
     data = request.get_json()
-    message = parse_data(data)
+    messages = parse_data(data)
     config = get_configuration()
     bot_token = config[text]['bot_token']
     chat_id = config[text]['chat_id']
-    send_message(bot_token, chat_id, message)
-    return message
+    for i in messages:
+        send_message(bot_token, chat_id, i)
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
