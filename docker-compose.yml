@@ -1,7 +1,7 @@
 version: "3.5"
 services:
   telegram-alertmanger:
-    build: .
+    image: kizzii/tlegram-alertmanger:latest
     container_name: telgram.alertmanger
     hostname: telegram-alertmanger
     environment:
