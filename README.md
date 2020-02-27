@@ -1,23 +1,22 @@
 # Telegram-Alertmanager
 
-This is an API for allow Alert Manager from Prometheus send messages to Telegram
+This is an API for allowing Alert Manager from Prometheus send messages to Telegram
 
 Require:
   - [prom/alertmanager:v0.20.0](https://hub.docker.com/r/prom/alertmanager)
   - [Telgram Bot](https://core.telegram.org/bots)
  
- # How to use this image
+# How to use this image
 
-## via docker run
-
+**via docker run**
 ```bash
-docker run -d --name my-telegram-alertmanager -p 8000:80 \
+docker run -d -name my-telegram-alertmanager -p 8000:80 \
 -e DEFAULT_BOT_TOKEN=<telegram_bot_token> \
 -e DEFAULT_CHAT_ID=<chat_id> \
 kizzii/telegram-alertmanager:latest
 ```
 
-## via docker-compose
+**via docker-compose**
  
  ```yaml
 version: "3.5"
