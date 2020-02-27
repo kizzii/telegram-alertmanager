@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import request
+from datetime import datetime
 import telegram
 import yaml
 import os
@@ -31,16 +32,18 @@ def get_configuration():
     return config
 
 def parse_data(data):
+    result = []
     try:
-        messege = ""
-        messege += 'Status: ' + data['status'] + '\n'
-        messege += 'Name: ' + data['commonLabels']['alertname'] + ' ['+ data['commonLabels']['severity'] + ']' + '\n'
-        messege += 'Description: ' + data['commonAnnotations']['description']
+        for alert in data['alerts']:
+            messege = ""
+            messege += 'Status: ' + alert['status'] + '\n'
+            messege += 'Name: ' + alert['labels']['alertname'] + ' ['+ alert['labels']['severity'] + ']' + '\n'
+            messege += 'Description: ' + alert['annotations']['description']
+            result.append(messege)
     except KeyError as err:
         app.logger.error(f"Data : {data}")
         raise err
-
-    return messege
+    return result
 
 def send_message(bot_token, chat_id, message):
     bot = telegram.Bot(token=bot_token)
@@ -49,9 +52,10 @@ def send_message(bot_token, chat_id, message):
 @app.route('/<path:text>', methods=['GET', 'POST'])
 def root(text):
     data = request.get_json()
-    message = parse_data(data)
+    messeges = parse_data(data)
     config = get_configuration()
     bot_token = config[text]['bot_token']
     chat_id = config[text]['chat_id']
-    send_message(bot_token, chat_id, message)
+    for i in messeges:
+        send_message(bot_token, chat_id, i)
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
