@@ -130,3 +130,6 @@ dmypy.json
 
 # Pipenv files
 Pipfile*
+
+# Vim
+*.swp

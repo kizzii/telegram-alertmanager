@@ -1,0 +1,4 @@
+# Web hook url http://<host>:<port>/<name>
+<name>:
+  bot_token: <bot_token>
+  chat_id: <chat_id> 

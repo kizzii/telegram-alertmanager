@@ -1,0 +1,12 @@
+version: "3.5"
+services:
+  telegram-alertmanger:
+    image: kizzii/tlegram-alertmanger:latest
+    container_name: telgram.alertmanger
+    hostname: telegram-alertmanger
+    environment:
+      DEFAULT_BOT_TOKEN: <TELEGRAM DEFAULT BOT TOKEN>
+      DEFAULT_CHAT_ID: <TELEGRAM DEFAULT CHAT ID>
+    ports:
+      - "80:80"
+    restart: always
