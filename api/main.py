@@ -53,5 +53,5 @@ def root(text):
     config = get_configuration()
     bot_token = config[text]['bot_token']
     chat_id = config[text]['chat_id']
-    send_message(bot_token, chat_id, html)
+    send_message(bot_token, chat_id, message)
     return message
