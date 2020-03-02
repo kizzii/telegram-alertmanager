@@ -61,19 +61,21 @@ Then mount this file to container
 You need to Create Telegram Bot then you can get Bot Token and Chat ID 
 [https://core.telegram.org/bots](https://core.telegram.org/bots)
 
-# Alertmanger config file
+# Alertmanger config file and Webhook URL
 **alertmanager.yml**
+
 ```yaml
 ...
-recivers:
+receivers:
 - name: example_group
   webhook_configs:
-  - url: "http://localhost:8000/example #example is from configfile
+  - url: "http://localhost:8000/example #example is from config.yaml file
 - name: example2_group
   webhook_configs:
-  - url: "http://localhost:8000/example2 #example2 is from configfile
+  - url: "http://localhost:8000/example2 #example2 is from config.yaml file
 ...
 ```
 
 #### Note
-if you use `DEFAULT_BOT_TOKEN` and `DEFAULT_CHAT_ID` default url is `http://<hostname>:<port>/default`
+if you don't define config.yaml then you spicify env variable `DEFAULT_BOT_TOKEN` and `DEFAULT_CHAT_ID` default webhook url is `http://<hostname>:<port>/default`
+
